@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Generador Pro Escalado</title>
+    <link rel="stylesheet" href="src/output.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -19,26 +20,51 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-linear-to-br from-purple-900 to-indigo-950 text-white min-h-screen flex flex-col items-center p-5">
+    <h1 class="text-6xl text-teal-300 font-extrabold text-shadow-amber-200 text-shadow-2xl m-4" >PDF Images writter</h1>
 
-<div class="controls">
-    <select id="fmt">
-        <option value="a4">A4</option>
-        <option value="a3">A3</option>
-    </select>
-    <select id="ori">
-        <option value="p">Vertical</option>
-        <option value="l">Horizontal</option>
-    </select>
-    <input type="text" id="titulo" placeholder="Título...">
-    <input type="file" id="imgInp" accept="image/*">
-    <button class="btn-add">Añadir</button>
-    <button class="btn-save">Descargar PDF</button>
-</div>
+    <div class="bg-white text-neutral-800 p-6 rounded-xl shadow-2xl mb-8 w-full max-w-4xl flex flex-wrap gap-4 items-center justify-center z-50">
+        <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold uppercase text-neutral-500">Formato</label>
+            <select id="fmt" class="border rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="a4">A4</option>
+                <option value="a3">A3</option>
+            </select>
+        </div>
 
-<div class="preview-area">
-    <div id="folio-real"></div>
-</div>
+        <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold uppercase text-neutral-500">Orientación</label>
+            <select id="ori" class="border rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="p">Vertical</option>
+                <option value="l">Horizontal</option>
+            </select>
+        </div>
+
+        <div class="flex flex-col gap-1 grow">
+            <label class="text-xs font-bold uppercase text-neutral-500">Título</label>
+            <input type="text" id="titulo" placeholder="Ej: Paisaje de montaña" class="border rounded px-3 py-1.5 outline-none focus:border-blue-500">
+        </div>
+
+        <div class="flex gap-4">
+
+            <div class="flex flex-col gap-1 p-4 border-2 border-dashed border-stone-600 bg-stone-200">
+                <label class="text-xs font-bold uppercase text-neutral-500">Imagen</label>
+                <input type="file" id="imgInp" accept="image/*" class="text-sm file:mr-4 file:py-1 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor:pointer">
+            </div>
+
+       
+            <div class="flex gap-4 justify-between items-center m-auto">
+                <button class="btn-add bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors shadow-lg">Añadir</button>
+                
+            </div>
+        </div>
+
+        <button class="btn-save bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded transition-colors shadow-lg">Guardar PDF</button>
+
+        <div class="w-full h-162.5 bg-neutral-800 border-2 border-dashed border-neutral-600 rounded-lg overflow-auto flex justify-center p-10 shadow-inner">
+            <div id="folio-real" class="bg-white text-black shadow-[0_0_50px_rgba(0,0,0,0.5)] grid grid-cols-[repeat(auto-fill,minmax(70mm,1fr))] auto-rows-min gap-[10mm] p-[15mm] shrink-0 transition-transform duration-300">
+            </div>
+        </div>
 
 <script>
     let sizes = {

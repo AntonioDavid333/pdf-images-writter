@@ -1,0 +1,25 @@
+{
+  "name": "pdf-images-writter",
+  "version": "1.0.0",
+  "description": "Proyecto creado para mi amigo Javi, que desea automatizar la subida de fotos con un título a una hoja y descargarlo en pdf",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonioDavid333/pdf-images-writter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AntonioDavid333/pdf-images-writter/issues"
+  },
+  "homepage": "https://github.com/AntonioDavid333/pdf-images-writter#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "tailwindcss": "^4.1.18"
+  }
+}
