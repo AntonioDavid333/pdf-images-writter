@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador Pro Escalado</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+</head>
+<body>
+
+<div class="controls">
+    <select id="fmt">
+        <option value="a4">A4</option>
+        <option value="a3">A3</option>
+    </select>
+    <select id="ori">
+        <option value="p">Vertical</option>
+        <option value="l">Horizontal</option>
+    </select>
+    <input type="text" id="titulo" placeholder="Título...">
+    <input type="file" id="imgInp" accept="image/*">
+    <button class="btn-add">Añadir</button>
+    <button class="btn-save">Descargar PDF</button>
+</div>
+
+<div class="preview-area">
+    <div id="folio-real"></div>
+</div>
+
+<script>
+    let sizes = {
+        a4: { p: [210, 297], l: [297, 210] },
+        a3: { p: [297, 420], l: [420, 297] }
+    };
+
+    window.addEventListener("load", function(){
+        update()
+        document.getElementById('fmt').addEventListener('change', update)
+        document.getElementById('ori').addEventListener('change', update)
+        document.querySelector('button.btn-add').addEventListener('click', add)
+        document.querySelector('button.btn-save').addEventListener('click', save)
+    })
+
+    function update() {
+        let [w, h] = sizes[document.getElementById('fmt').value][document.getElementById('ori').value];
+        document.documentElement.style.setProperty('--w-mm', w);
+        document.documentElement.style.setProperty('--h-mm', h);
+        
+        let folio = document.getElementById('folio-real');
+        if(w > 300) folio.style.transform = "scale(0.4)"; 
+        else folio.style.transform = "scale(0.6)";
+    }
+
+    function add() {
+        let t = document.getElementById('titulo').value;
+        let file = document.getElementById('imgInp').files[0];
+        if (!file) return;
+
+        let reader = new FileReader();
+        reader.onload = (e) => {
+            let div = document.createElement('div');
+            div.className = 'item-card';
+            div.innerHTML = `<button class="btn-delete" onclick="this.parentElement.remove()">✕</button>
+                             <span>${t || ''}</span>
+                             <img src="${e.target.result}">`;
+            document.getElementById('folio-real').appendChild(div);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    async function save() {
+        let { jsPDF } = window.jspdf;
+        let folio = document.getElementById('folio-real');
+        let botones = document.querySelectorAll('.btn-delete');
+        
+        let originalTransform = folio.style.transform;
+        folio.style.transform = "none";
+        botones.forEach(b => b.style.display = 'none');
+
+        let canvas = await html2canvas(folio, { scale: 2 });
+        let imgData = canvas.toDataURL('image/jpeg', 0.98);
+
+        let fmt = document.getElementById('fmt').value;
+        let ori = document.getElementById('ori').value;
+        let pdf = new jsPDF(ori, 'mm', fmt);
+        
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+        pdf.save("documento.pdf");
+
+        folio.style.transform = originalTransform;
+        botones.forEach(b => b.style.display = 'block');
+    }
+
+</script>
+
+</body>
+</html>
