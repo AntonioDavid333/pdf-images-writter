@@ -2,8 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Generador Pro Escalado</title>
-    <link rel="stylesheet" href="src/output.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Pro Responsive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -20,51 +21,56 @@
         }
     </style>
 </head>
-<body class="bg-linear-to-br from-purple-900 to-indigo-950 text-white min-h-screen flex flex-col items-center p-5">
-    <h1 class="text-6xl text-teal-300 font-extrabold text-shadow-amber-200 text-shadow-2xl m-4" >PDF Images writter</h1>
+<body class="bg-gradient-to-br from-purple-900 to-indigo-950 text-white min-h-screen flex flex-col items-center p-2 md:p-5">
+    
+    <h1 class="text-4xl md:text-6xl text-teal-300 font-extrabold m-4 text-center drop-shadow-[0_0_15px_rgba(251,191,36,0.8)]">
+        PDF Images Writer
+    </h1>
 
-    <div class="bg-white text-neutral-800 p-6 rounded-xl shadow-2xl mb-8 w-full max-w-4xl flex flex-wrap gap-4 items-center justify-center z-50">
-        <div class="flex flex-col gap-1">
-            <label class="text-xs font-bold uppercase text-neutral-500">Formato</label>
-            <select id="fmt" class="border rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none">
-                <option value="a4">A4</option>
-                <option value="a3">A3</option>
-            </select>
-        </div>
-
-        <div class="flex flex-col gap-1">
-            <label class="text-xs font-bold uppercase text-neutral-500">Orientación</label>
-            <select id="ori" class="border rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none">
-                <option value="p">Vertical</option>
-                <option value="l">Horizontal</option>
-            </select>
-        </div>
-
-        <div class="flex flex-col gap-1 grow">
-            <label class="text-xs font-bold uppercase text-neutral-500">Título</label>
-            <input type="text" id="titulo" placeholder="Ej: Paisaje de montaña" class="border rounded px-3 py-1.5 outline-none focus:border-blue-500">
-        </div>
-
-        <div class="flex gap-4">
-
-            <div class="flex flex-col gap-1 p-4 border-2 border-dashed border-stone-600 bg-stone-200">
-                <label class="text-xs font-bold uppercase text-neutral-500">Imagen</label>
-                <input type="file" id="imgInp" accept="image/*" class="text-sm file:mr-4 file:py-1 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor:pointer">
+    <div class="bg-white text-neutral-800 p-4 md:p-6 rounded-xl shadow-2xl mb-8 w-full max-w-4xl flex flex-wrap gap-4 items-center justify-center z-50">
+        
+        <div class="flex w-full md:w-auto gap-2">
+            <div class="flex flex-col gap-1 w-1/2 md:w-24">
+                <label class="text-[10px] font-bold uppercase text-neutral-500">Formato</label>
+                <select id="fmt" class="border rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                    <option value="a4">A4</option>
+                    <option value="a3">A3</option>
+                </select>
             </div>
 
-       
-            <div class="flex gap-4 justify-between items-center m-auto">
-                <button class="btn-add bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors shadow-lg">Añadir</button>
-                
+            <div class="flex flex-col gap-1 w-1/2 md:w-32">
+                <label class="text-[10px] font-bold uppercase text-neutral-500">Orientación</label>
+                <select id="ori" class="border rounded px-2 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                    <option value="p">Vertical</option>
+                    <option value="l">Horizontal</option>
+                </select>
             </div>
         </div>
 
-        <button class="btn-save bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded transition-colors shadow-lg">Guardar PDF</button>
+        <div class="flex flex-col gap-1 grow w-full md:w-auto">
+            <label class="text-[10px] font-bold uppercase text-neutral-500">Título</label>
+            <input type="text" id="titulo" placeholder="Ej: Paisaje..." class="border rounded px-3 py-1.5 outline-none focus:border-blue-500 text-sm">
+        </div>
 
-        <div class="w-full h-162.5 bg-neutral-800 border-2 border-dashed border-neutral-600 rounded-lg overflow-auto flex justify-center p-10 shadow-inner">
-            <div id="folio-real" class="bg-white text-black shadow-[0_0_50px_rgba(0,0,0,0.5)] grid grid-cols-[repeat(auto-fill,minmax(70mm,1fr))] auto-rows-min gap-[10mm] p-[15mm] shrink-0 transition-transform duration-300">
+        <div class="flex flex-col gap-1 p-3 border-2 border-dashed border-stone-400 bg-stone-100 rounded-lg w-full md:w-auto">
+            <label class="text-[10px] font-bold uppercase text-neutral-500">Imagen</label>
+            <input type="file" id="imgInp" accept="image/*" class="text-xs cursor-pointer">
+        </div>
+
+        <div class="flex flex-col gap-2 w-full md:w-40">
+            <button class="btn-add bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded transition-all active:scale-95 shadow-lg">
+                Añadir
+            </button>
+            <button class="btn-save bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded transition-all active:scale-95 shadow-lg">
+                Guardar PDF
+            </button>
+        </div>
+
+        <div class="w-full h-[50vh] md:h-[600px] bg-neutral-800 border-2 border-dashed border-neutral-600 rounded-lg overflow-auto flex justify-center p-4 md:p-10 shadow-inner mt-4">
+            <div id="folio-real" class="bg-white text-black shadow-2xl grid grid-cols-[repeat(auto-fill,minmax(70mm,1fr))] auto-rows-min gap-[10mm] p-[15mm] shrink-0 transition-transform duration-300">
             </div>
         </div>
+    </div>
 
 <script>
     let sizes = {
@@ -72,13 +78,14 @@
         a3: { p: [297, 420], l: [420, 297] }
     };
 
-    window.addEventListener("load", function(){
-        update()
-        document.getElementById('fmt').addEventListener('change', update)
-        document.getElementById('ori').addEventListener('change', update)
-        document.querySelector('button.btn-add').addEventListener('click', add)
-        document.querySelector('button.btn-save').addEventListener('click', save)
-    })
+    window.addEventListener("load", () => {
+        update();
+        window.addEventListener('resize', update); // Recalcular zoom al girar el móvil
+        document.getElementById('fmt').addEventListener('change', update);
+        document.getElementById('ori').addEventListener('change', update);
+        document.querySelector('button.btn-add').addEventListener('click', add);
+        document.querySelector('button.btn-save').addEventListener('click', save);
+    });
 
     function update() {
         let [w, h] = sizes[document.getElementById('fmt').value][document.getElementById('ori').value];
@@ -86,39 +93,48 @@
         document.documentElement.style.setProperty('--h-mm', h);
         
         let folio = document.getElementById('folio-real');
-        if(w > 300) folio.style.transform = "scale(0.4)"; 
-        else folio.style.transform = "scale(0.6)";
+        let containerWidth = folio.parentElement.clientWidth - 40;
+        let realWidthPx = w * 3.7795275591; 
+        
+        let scale = containerWidth / realWidthPx;
+        if (scale > 0.7) scale = 0.6; 
+        
+        folio.style.transform = `scale(${scale})`;
     }
 
     function add() {
         let t = document.getElementById('titulo').value;
-        let file = document.getElementById('imgInp').files[0];
+        let fileInp = document.getElementById('imgInp');
+        let file = fileInp.files[0];
         if (!file) return;
 
         let reader = new FileReader();
         reader.onload = (e) => {
             let div = document.createElement('div');
             div.className = 'item-card';
-            div.innerHTML = `<button class="btn-delete" onclick="this.parentElement.remove()">✕</button>
-                             <span>${t || ''}</span>
-                             <img src="${e.target.result}">`;
+            div.innerHTML = `
+                <button class="absolute top-2 right-2 bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow-md" onclick="this.parentElement.remove()">✕</button>
+                <span class="p-2 text-center font-bold h-[20%] flex items-center justify-center text-[12pt]">${t || ''}</span>
+                <img src="${e.target.result}" class="h-[80%] w-full object-cover">`;
             document.getElementById('folio-real').appendChild(div);
+            document.getElementById('titulo').value = "";
+            fileInp.value = "";
         };
         reader.readAsDataURL(file);
     }
 
     async function save() {
-        let { jsPDF } = window.jspdf;
         let folio = document.getElementById('folio-real');
-        let botones = document.querySelectorAll('.btn-delete');
+        let botones = document.querySelectorAll('#folio-real button');
         
         let originalTransform = folio.style.transform;
         folio.style.transform = "none";
-        botones.forEach(b => b.style.display = 'none');
+        botones.forEach(b => b.style.opacity = '0');
 
-        let canvas = await html2canvas(folio, { scale: 2 });
-        let imgData = canvas.toDataURL('image/jpeg', 0.98);
+        let canvas = await html2canvas(folio, { scale: 2, useCORS: true });
+        let imgData = canvas.toDataURL('image/jpeg', 0.95);
 
+        let { jsPDF } = window.jspdf;
         let fmt = document.getElementById('fmt').value;
         let ori = document.getElementById('ori').value;
         let pdf = new jsPDF(ori, 'mm', fmt);
@@ -127,10 +143,8 @@
         pdf.save("documento.pdf");
 
         folio.style.transform = originalTransform;
-        botones.forEach(b => b.style.display = 'block');
+        botones.forEach(b => b.style.opacity = '1');
     }
-
 </script>
-
 </body>
 </html>
